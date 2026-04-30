@@ -1,0 +1,159 @@
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+
+CodeBrix.Platform.Fonts.OpenSans is a CodeBrix-family redistribution of the
+Open Sans font family, packaged as a .NET 10 NuGet library. The package
+incorporates third-party material from two distinct sources:
+
+  1. Uno.Fonts.OpenSans 2.8.1 (Apache-2.0) — the original packaging shape,
+     `.targets` MSBuild logic, `.uprimarker` mechanism, and `.ttf.manifest`
+     JSON format, all designed and originally published by Uno Platform Inc.
+  2. The Open Sans font family (SIL OFL 1.1) — the actual `.ttf` font
+     files themselves, originally designed by Steve Matteson and currently
+     maintained by the Google Fonts team as the Open Sans Project.
+
+Each of these is reproduced under the terms of its own license. The full
+SIL Open Font License Version 1.1 text is bundled with this repository as
+`OFL.txt` at the repository root and is also packaged inside the produced
+NuGet under the same name.
+
+================================================================================
+
+1. Uno.Fonts.OpenSans 2.8.1
+   --------------------------
+   Project URL:    https://github.com/unoplatform/uno.fonts
+   Tag/commit:     8cc45f9901538563082b38de9b5eb2f413d083dd (release 2.8.1)
+   Copyright:      Copyright (C) 2015-2025 Uno Platform Inc. - all rights reserved
+   License:        Apache License, Version 2.0
+
+   Files derived from this upstream project (and adapted for CodeBrix family
+   conventions and the .NET 10 target):
+
+     - src/CodeBrix.Platform.Fonts.OpenSans/CodeBrix.Platform.Fonts.OpenSans.csproj
+         (csproj, restructured for CodeBrix conventions; was previously
+          nuget/OpenSans/Uno.Fonts.OpenSans/Uno.Fonts.OpenSans.csproj)
+     - src/CodeBrix.Platform.Fonts.OpenSans/buildTransitive/net10.0/CodeBrix.Platform.Fonts.OpenSans.ApacheLicenseForever.targets
+         (MSBuild .targets, retargeted to .NET 10 paths and renamed target;
+          on-disk filename matches the NuGet PackageId so consumer auto-import
+          works correctly per NuGet convention NU5129; was previously
+          nuget/OpenSans/Uno.Fonts.OpenSans/buildTransitive/net7.0/Uno.Fonts.OpenSans.targets)
+     - src/CodeBrix.Platform.Fonts.OpenSans/CodeBrix.Platform.Fonts.OpenSans.uprimarker
+         (empty marker file, renamed; was previously
+          nuget/OpenSans/Uno.Fonts.OpenSans.uprimarker)
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans.ttf.manifest
+         (font manifest JSON, family_name paths rewritten from
+          `ms-appx:///Uno.Fonts.OpenSans/Fonts/...` to
+          `ms-appx:///CodeBrix.Platform.Fonts.OpenSans/Fonts/...`;
+          was previously nuget/OpenSans/Uno.Fonts.OpenSans/Fonts/OpenSans.ttf.manifest)
+
+   Modifications made during port:
+     - Target framework changed from net7.0 to net10.0.
+     - Assembly name, root namespace, package id, and content-folder name
+       changed from `Uno.Fonts.OpenSans` to `CodeBrix.Platform.Fonts.OpenSans`.
+     - In the .targets file, `<Target Name="UnoRemoveUnusedOpenSans" ...>`
+       renamed to `<Target Name="CodeBrixRemoveUnusedOpenSans" ...>`. The
+       `AfterTargets="_UnoAddLibraryAssets"` reference is preserved verbatim
+       so the target still hooks into Uno-fork build pipelines.
+     - In the .ttf.manifest, all 36 `family_name` `ms-appx:///` paths
+       updated to point at the renamed content folder.
+     - Project license expression broadened from `Apache-2.0` to
+       `Apache-2.0 AND OFL-1.1` so the SIL OFL 1.1 license of the bundled
+       font files is accurately recorded at the package level. Upstream
+       Uno.Fonts.OpenSans declared only `Apache-2.0`; the OFL.txt
+       license text is now bundled in this CodeBrix port to satisfy
+       SIL OFL 1.1 redistribution conditions 2 and 5.
+     - csproj forbidden-property pruning per CodeBrix family conventions:
+       `<Nullable>enable</Nullable>`, `<LangVersion>10.0</LangVersion>`,
+       and `<WarningsAsErrors>enable</WarningsAsErrors>` removed.
+     - Standard CodeBrix-family scaffolding added (8 AI-pointer files,
+       AGENT-README.txt, README.md, .slnx, InternalsVisibleTo.cs).
+
+   The full Apache License Version 2.0 text is reproduced in the LICENSE file
+   at the root of this repository.
+
+================================================================================
+
+2. Open Sans Font Family
+   ---------------------
+   Project URL:    https://github.com/googlefonts/opensans
+   Designer:       Steve Matteson (Type Director, Ascender Corp)
+   Copyright:      Copyright 2020 The Open Sans Project Authors
+                   (https://github.com/googlefonts/opensans),
+                   with Reserved Font Name "Open Sans".
+   License:        SIL Open Font License, Version 1.1
+
+   Files redistributed from this upstream project (binary `.ttf` files,
+   bit-for-bit identical to the copies that Uno.Fonts.OpenSans 2.8.1
+   shipped under `lib/net7.0/Uno.Fonts.OpenSans/Fonts/`):
+
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans.ttf
+         (the Open Sans variable font covering weights 300-800 plus italic axis)
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-Light.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-LightItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-Regular.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-Italic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-Medium.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-MediumItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-SemiBold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-SemiBoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-Bold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-BoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-ExtraBold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans-ExtraBoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-Light.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-LightItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-Regular.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-Italic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-Medium.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-MediumItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-SemiBold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-SemiBoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-Bold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-BoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-ExtraBold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_Condensed-ExtraBoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-Light.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-LightItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-Regular.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-Italic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-Medium.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-MediumItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-SemiBold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-SemiBoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-Bold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-BoldItalic.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-ExtraBold.ttf
+     - src/CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans_SemiCondensed-ExtraBoldItalic.ttf
+
+   No modifications were made to any `.ttf` binary. The "Open Sans"
+   Reserved Font Name is preserved unchanged, in compliance with SIL OFL
+   condition 3.
+
+   The full SIL Open Font License Version 1.1 text is reproduced in
+   `OFL.txt` at the root of this repository, and is also packaged inside
+   the produced NuGet under the same name.
+
+================================================================================
+
+License compatibility statement
+-------------------------------
+
+The combined work is published under SPDX expression `Apache-2.0 AND OFL-1.1`.
+SIL OFL 1.1 is a permissive font license that explicitly allows fonts to be
+bundled and redistributed alongside any other software (condition 2),
+including software licensed under Apache-2.0. The font files themselves
+remain under SIL OFL 1.1; only the wrapper code, .targets, and packaging
+metadata are under Apache-2.0.
+
+Jeremy Ellis and contributors license the CodeBrix.Platform.Fonts.OpenSans
+project to you under the terms set forth in the LICENSE file (Apache-2.0)
+combined with the OFL.txt file (SIL OFL 1.1) for the bundled font assets,
+both of which are located at the root of this repository.
+
+If you have any questions about any third-party code or assets referenced
+here, or if you believe that any third-party material has been included in
+CodeBrix.Platform.Fonts.OpenSans in error, please open a new issue at:
+https://github.com/ellisnet/CodeBrix.Platform.Fonts.OpenSans/issues
+
+================================================================================
+
+END OF THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
