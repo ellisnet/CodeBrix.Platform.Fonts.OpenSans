@@ -11,7 +11,7 @@
             <!-- The variable font OpenSans.ttf is intentionally NEVER removed: consumers
                  (and the CodeBrix.Platform default-font configuration) reference it by the
                  direct ms-appx:///CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans.ttf path,
-                 so it must stay present on every platform -- including manifest-capable ones. -->
+                 so it must stay present on every platform, including manifest-capable ones. -->
         </ItemGroup>
     </Target>
 </Project>

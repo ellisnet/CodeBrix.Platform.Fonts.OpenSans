@@ -7,6 +7,9 @@
     <File Path="README.md" />
     <File Path="THIRD-PARTY-NOTICES.txt" />
   </Folder>
+  <Folder Name="/Solution Items/src/">
+    <File Path="src/CodeBrix.Platform.Fonts.OpenSans/buildTransitive/net10.0/CodeBrix.Platform.Fonts.OpenSans.ApacheLicenseForever.targets" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/CodeBrix.Platform.Fonts.OpenSans.Tests/CodeBrix.Platform.Fonts.OpenSans.Tests.csproj" />
   </Folder>
