@@ -50,9 +50,13 @@ NuGet under the same name.
      - Assembly name, root namespace, package id, and content-folder name
        changed from `Uno.Fonts.OpenSans` to `CodeBrix.Platform.Fonts.OpenSans`.
      - In the .targets file, `<Target Name="UnoRemoveUnusedOpenSans" ...>`
-       renamed to `<Target Name="CodeBrixRemoveUnusedOpenSans" ...>`. The
-       `AfterTargets="_UnoAddLibraryAssets"` reference is preserved verbatim
-       so the target still hooks into Uno-fork build pipelines.
+       renamed to `<Target Name="CodeBrixRemoveUnusedOpenSans" ...>`, and the
+       `AfterTargets` hook repointed from the upstream `_UnoAddLibraryAssets`
+       to the CodeBrix.Platform fork's `_CodeBrixAddLibraryAssets` target (the
+       fork renamed that internal target). The variable-font-removal branch
+       was also dropped so the variable OpenSans.ttf is always retained,
+       keeping the direct `ms-appx:///.../OpenSans.ttf` reference resolvable
+       on every platform.
      - In the .ttf.manifest, all 36 `family_name` `ms-appx:///` paths
        updated to point at the renamed content folder.
      - Project license expression broadened from `Apache-2.0` to

@@ -1,18 +1,17 @@
 <Project>
     <!-- was previously: nuget/OpenSans/Uno.Fonts.OpenSans/buildTransitive/net7.0/Uno.Fonts.OpenSans.targets -->
-    <Target Name="CodeBrixRemoveUnusedOpenSans" AfterTargets="_UnoAddLibraryAssets">
+    <Target Name="CodeBrixRemoveUnusedOpenSans" AfterTargets="_CodeBrixAddLibraryAssets">
         <ItemGroup>
             <!-- Static font files contain a dash in the name, so that's what we remove. -->
-            <!-- For platforms that already support variable fonts, we remove the static font files. -->
+            <!-- On platforms that don't support the font manifest, keep only the variable font. -->
             <_AllChildProjectItemsWithTargetPath
                 Remove="$(MSBuildThisFileDirectory)..\..\lib\net10.0\CodeBrix.Platform.Fonts.OpenSans\Fonts\**-**.ttf"
                 Condition="'$(SupportsFontManifest)'!='true'" />
 
-            <!-- The variable font file is exactly named OpenSans.ttf -->
-            <!-- For platforms that don't support variable fonts, we remove that file -->
-            <_AllChildProjectItemsWithTargetPath
-                Remove="$(MSBuildThisFileDirectory)..\..\lib\net10.0\CodeBrix.Platform.Fonts.OpenSans\Fonts\OpenSans.ttf"
-                Condition="'$(SupportsFontManifest)'=='true'" />
+            <!-- The variable font OpenSans.ttf is intentionally NEVER removed: consumers
+                 (and the CodeBrix.Platform default-font configuration) reference it by the
+                 direct ms-appx:///CodeBrix.Platform.Fonts.OpenSans/Fonts/OpenSans.ttf path,
+                 so it must stay present on every platform -- including manifest-capable ones. -->
         </ItemGroup>
     </Target>
 </Project>

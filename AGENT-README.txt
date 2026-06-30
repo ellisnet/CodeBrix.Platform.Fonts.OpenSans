@@ -23,9 +23,10 @@ files. The interesting payload lives in:
   - A `.uprimarker` file that Uno-fork build pipelines use to discover
     UPRI-bearing font asset packages.
   - An MSBuild `.targets` file under buildTransitive/net10.0/ that hooks
-    into Uno's `_UnoAddLibraryAssets` target and prunes either the
-    static fonts or the variable font at consumer-build time, depending
-    on the `SupportsFontManifest` MSBuild property.
+    into the CodeBrix.Platform `_CodeBrixAddLibraryAssets` target and
+    prunes the redundant static fonts at consumer-build time (depending on
+    the `SupportsFontManifest` MSBuild property), while always keeping the
+    variable font OpenSans.ttf present.
 
 
 INSTALLATION
@@ -94,12 +95,12 @@ only through:
      It contains the target:
 
        <Target Name="CodeBrixRemoveUnusedOpenSans"
-               AfterTargets="_UnoAddLibraryAssets">
+               AfterTargets="_CodeBrixAddLibraryAssets">
 
-     This target conditionally removes either the static fonts (when
-     the consumer platform supports the variable-font manifest) or the
-     variable font (when the consumer platform doesn't), so the final
-     output ships only the font files actually used.
+     On platforms that do not support the font manifest, this target
+     removes the static fonts (leaving only the variable font). The
+     variable OpenSans.ttf is never removed, so the direct
+     `ms-appx:///.../OpenSans.ttf` reference resolves on every platform.
 
 If a future iteration of this library exposes a managed API (e.g.
 typed accessors that return font streams or paths for non-Uno
@@ -214,10 +215,10 @@ The test suite covers:
     (catches incomplete namespace-rename regressions).
   * .targets file: that the buildTransitive .targets file is present
     next to the test assembly, that it declares the
-    `CodeBrixRemoveUnusedOpenSans` MSBuild target, that it still
-    hooks `AfterTargets="_UnoAddLibraryAssets"`, and that it contains
-    no leftover `Uno.Fonts.OpenSans\Fonts` path tokens from the
-    upstream port.
+    `CodeBrixRemoveUnusedOpenSans` MSBuild target, that it hooks
+    `AfterTargets="_CodeBrixAddLibraryAssets"`, that it never removes the
+    variable font, and that it contains no leftover
+    `Uno.Fonts.OpenSans\Fonts` path tokens from the upstream port.
 
 
 PROVENANCE OF PORTED FILES
@@ -242,11 +243,13 @@ KNOWN GOTCHAS
     on-disk location (`<nuget-cache>/codebrix.platform.fonts.opensans.apachelicenseforever/<version>/lib/net10.0/CodeBrix.Platform.Fonts.OpenSans/Fonts/...`),
     but they have to do that lookup themselves.
 
-  * The .targets file's `AfterTargets="_UnoAddLibraryAssets"` reference
-    is preserved verbatim from upstream. If the CodeBrix-fork of Uno
-    eventually renames that internal MSBuild target name, this .targets
-    file must be updated in lockstep — otherwise the conditional
-    pruning of static-vs-variable fonts will silently stop firing.
+  * The .targets file hooks `AfterTargets="_CodeBrixAddLibraryAssets"` —
+    the asset target defined by the CodeBrix.Platform UI build tasks.
+    (Upstream Uno named the equivalent target `_UnoAddLibraryAssets`; the
+    CodeBrix.Platform fork renamed it, so hooking the CodeBrix name is what
+    makes this prune actually fire.) If that internal target name ever
+    changes again, this .targets file must be updated in lockstep —
+    otherwise the static-font pruning will silently stop firing.
 
   * The Open Sans Reserved Font Name (per SIL OFL 1.1 condition 3)
     must not be reused for any modified version of the fonts. Do NOT

@@ -21,13 +21,13 @@ public class TargetsFileTests
     }
 
     [Fact]
-    public void Targets_file_hooks_after_uno_add_library_assets()
+    public void Targets_file_hooks_after_codebrix_add_library_assets()
     {
         //Arrange
         var content = File.ReadAllText(TestAssetPaths.TargetsFilePath);
 
         //Assert
-        content.Should().Contain("AfterTargets=\"_UnoAddLibraryAssets\"");
+        content.Should().Contain("AfterTargets=\"_CodeBrixAddLibraryAssets\"");
     }
 
     [Fact]
@@ -68,5 +68,17 @@ public class TargetsFileTests
 
         //Assert
         content.Should().Contain("$(SupportsFontManifest)");
+    }
+
+    [Fact]
+    public void Targets_file_never_removes_the_variable_font()
+    {
+        //Arrange
+        var content = File.ReadAllText(TestAssetPaths.TargetsFilePath);
+
+        //Assert
+        // The variable font (Fonts\OpenSans.ttf, no dash) must not appear in a
+        // Remove= expression; only the dash-bearing static fonts are pruned.
+        content.Should().NotContain("Fonts\\OpenSans.ttf\"");
     }
 }
