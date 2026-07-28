@@ -74,6 +74,10 @@
     <None Include="..\..\icon-codebrix-128.png"     Pack="true" PackagePath="" />
     <None Include="..\..\README.md"                  Pack="true" PackagePath="" />
     <None Include="..\..\AGENT-README.txt"           Pack="true" PackagePath="" />
+    <!-- The font's self-description for CodeBrix.Develop's New Application experience:
+         how to reference this font in a generated application, and which software-keyboard
+         layouts its glyph coverage actually supports. -->
+    <None Include="..\..\CODEBRIX-DEVELOP.json"      Pack="true" PackagePath="" />
     <None Include="..\..\THIRD-PARTY-NOTICES.txt"    Pack="true" PackagePath="" />
     <None Include="..\..\OFL.txt"                    Pack="true" PackagePath="" />
   </ItemGroup>
